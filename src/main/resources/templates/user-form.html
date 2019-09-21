@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://getbootstrap.com/docs/4.3/examples/dashboard/" rel="canonical">
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="../static/css/jumbotron.css" rel="stylesheet" th:href="@{/css/jumbotron.css}">
+    <link href="../static/css/main.css" rel="stylesheet" th:href="@{/css/main.css}">
+    <link href="../static/css/dashboard.css" rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link href="../static/css/s.css" rel="stylesheet" th:href="@{/css/s.css}">
+    <title>User</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">
+</div>
+
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments/sidebar :: sidebar">
+            </div>
+
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="mt-4">
+                    <main class="ml-sm-auto px-4">
+                        <div>
+                            <form action="#" method="post" th:action="@{/users/saveUser}" th:object="${user}">
+                                <input th:field="*{id}" type="hidden"/>
+                                <input th:field="*{role}" type="hidden"/>
+                                <input th:field="*{username}" type="hidden"/>
+                                <input th:field="*{password}" type="hidden"/>
+                                <label style="font-weight: bold; font-size: 14px">FIRST NAME</label>
+                                <input class="form-control mb-3 col-4" placeholder="First Name" th:field="*{firstName}"
+                                       type="text"/>
+                                <label style="font-weight: bold; font-size: 14px">LAST NAME</label>
+                                <input class="form-control mb-3 col-4" placeholder="Last Name" th:field="*{lastName}"
+                                       type="text"/>
+                                <label style="font-weight: bold; font-size: 14px">EMAIL</label>
+                                <input class="form-control mb-3 col-4" placeholder="Email" th:field="*{email}"
+                                       type="email"/>
+
+                                <!--<label style="font-weight: bold; font-size: 14px">USER NAME</label>-->
+                                <!--<input class="form-control mb-3 col-4" placeholder="Login" th:field="*{username}"-->
+                                <!--type="text"/>-->
+                                <!--<label style="font-weight: bold; font-size: 14px">PASSWORD</label>-->
+                                <!--<input class="form-control mb-3 col-4" placeholder="Password" th:field="*{password}"-->
+                                <!--type="text"/>-->
+
+                                <label style="font-weight: bold; font-size: 14px">ADDRESS</label>
+                                <input class="form-control mb-3 col-4" placeholder="Address" th:field="*{address}"
+                                       type="text"/>
+                                <input class="btn btn-outline-secondary col-2 mt-1" type="submit" value="Save"/>
+                            </form>
+                        </div>
+                    </main>
+                </div>
+            </main>
+        </div>
+    </div>
+</main>
+
+
+<!--<div class="container">-->
+<!--<main class="ml-sm-auto px-4" role="main">-->
+<!--<div>-->
+<!--<form action="#" class="mt-4" method="post" th:action="@{/users/saveUser}" th:object="${user}">-->
+<!--<input th:field="*{id}" type="hidden"/>-->
+<!--<label style="font-weight: bold; font-size: 14px">FIRST NAME</label>-->
+<!--<input class="form-control mb-3 col-4" placeholder="First Name" th:field="*{firstName}"-->
+<!--type="text"/>-->
+<!--<label style="font-weight: bold; font-size: 14px">LAST NAME</label>-->
+<!--<input class="form-control mb-3 col-4" placeholder="Last Name" th:field="*{lastName}"-->
+<!--type="text"/>-->
+<!--<label style="font-weight: bold; font-size: 14px">EMAIL</label>-->
+<!--<input class="form-control mb-3 col-4" placeholder="Email" th:field="*{email}" type="email"/>-->
+<!--<label style="font-weight: bold; font-size: 14px">LOGIN</label>-->
+<!--<input class="form-control mb-3 col-4" placeholder="Login" th:field="*{login}" type="text"/>-->
+<!--<label style="font-weight: bold; font-size: 14px">PASSWORD</label>-->
+<!--<input class="form-control mb-3 col-4" placeholder="Password" th:field="*{password}"-->
+<!--type="password"/>-->
+<!--<label style="font-weight: bold; font-size: 14px">ADDRESS</label>-->
+<!--<input class="form-control mb-3 col-4" placeholder="Address" th:field="*{address}"-->
+<!--type="text"/>-->
+<!--<input class="btn btn-outline-secondary col-2 mt-1" type="submit" value="Save"/>-->
+<!--</form>-->
+<!--</div>-->
+<!--</main>-->
+<!--</div>-->
+
+
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<!-- Popper.JS -->
+<script crossorigin="anonymous" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script crossorigin="anonymous" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+<!--<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
+<!--src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>-->
+<!--<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"-->
+<!--src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>-->
+<!--<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"-->
+<!--src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+<!--<script src="dashboard.js"></script>-->
+</body>
+</html>

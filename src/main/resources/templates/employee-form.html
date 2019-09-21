@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://getbootstrap.com/docs/4.3/examples/dashboard/" rel="canonical">
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="../static/css/jumbotron.css" rel="stylesheet" th:href="@{/css/jumbotron.css}">
+    <link href="../static/css/main.css" rel="stylesheet" th:href="@{/css/main.css}">
+    <link href="../static/css/dashboard.css" rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <title>Employee</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">
+</div>
+
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments/sidebar :: sidebar">
+            </div>
+
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="mt-4">
+                    <div class="ml-sm-auto px-4">
+                        <div>
+                            <form action="#" class="mt-4" method="post" th:action="@{/employees/saveEmployee}"
+                                  th:object="${employee}">
+                                <input th:field="*{id}" type="hidden"/>
+                                <input th:field="*{entityStatus}" type="hidden"/>
+                                <label style="font-weight: bold; font-size: 14px">FIRST NAME</label>
+                                <input class="form-control mb-3 col-4" placeholder="First name" required
+                                       th:field="*{firstName}"
+                                       type="text"/>
+                                <label style="font-weight: bold; font-size: 14px">LAST NAME</label>
+                                <input class="form-control mb-3 col-4" placeholder="Last name" required
+                                       th:field="*{lastName}"
+                                       type="text"/>
+                                <label style="font-weight: bold; font-size: 14px">EMAIL</label>
+                                <input class="form-control mb-3 col-4" placeholder="Email" th:field="*{email}"
+                                       type="email"/>
+                                <label style="font-weight: bold; font-size: 14px">ADDRESS</label>
+                                <input class="form-control mb-3 col-4" placeholder="Address" th:field="*{address}"
+                                       type="text"/>
+                                <label style="font-weight: bold; font-size: 14px">USER NAME</label>
+                                <input class="form-control mb-3 col-4" placeholder="User name" th:field="*{username}"
+                                       type="text"/>
+                                <label style="font-weight: bold; font-size: 14px">PASSWORD</label>
+                                <input class="form-control mb-3 col-4" placeholder="Password" th:field="*{password}"
+                                       type="password"/>
+                                <label style="font-weight: bold; font-size: 14px">POSITION</label>
+                                <select class="form-control mb-3 col-4" th:field="*{role}">
+                                    <option value="">--</option>
+                                    <option th:each="s : ${roles}"
+                                            th:text="${s.name()}"
+                                            th:value="${s.name()}">
+                                    </option>
+                                </select>
+                                <label style="font-weight: bold; font-size: 14px">DEPARTMENT</label>
+                                <select class="form-control mb-3 col-4" th:field="*{department}">
+                                    <option value="">--</option>
+                                    <option th:each="dep : ${departments}"
+                                            th:text="${dep.address}"
+                                            th:value="${dep.id}"></option>
+                                </select>
+                                <input class="btn btn-outline-secondary col-2 mb-1" type="submit" value="Save"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</main>
+
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

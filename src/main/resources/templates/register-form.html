@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="https://getbootstrap.com/docs/4.3/examples/sign-in/" rel="canonical">
+
+    <link href="https://getbootstrap.com/docs/4.3/examples/jumbotron/" rel="canonical">
+
+    <!-- Bootstrap core CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="../static/css/jumbotron.css" rel="stylesheet" th:href="@{/css/jumbotron.css}">
+    <link href="../static/css/main.css" rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<div class="container mt-2">
+    <div class="offset-md-4 col-sm-4">
+        <div>
+            <form method="post" th:action="@{/register}" th:object="${user}">
+                <h1 class="h3 mb-3 font-weight-normal text-center">Please sign up</h1>
+                <label style="font-weight: bold; font-size: 14px">FIRST NAME</label>
+                <input autofocus class="form-control mb-2" placeholder="First Name" required th:field="*{firstName}"
+                       type="text">
+                <label style="font-weight: bold; font-size: 14px">LAST NAME</label>
+                <input autofocus class="form-control mb-2" placeholder="Last Name" required th:field="*{lastName}"
+                       type="text">
+                <label style="font-weight: bold; font-size: 14px">EMAIL</label>
+                <input autofocus class="form-control mb-2" placeholder="Email" required th:field="*{email}"
+                       type="email">
+                <label style="font-weight: bold; font-size: 14px">ADDRESS</label>
+                <input autofocus class="form-control mb-2" placeholder="Address" required th:field="*{address}"
+                       type="text">
+                <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error':''">
+                    <label style="font-weight: bold; font-size: 14px">USER NAME</label>
+                    <input autofocus class="form-control mb-2" placeholder="User Name" required th:field="*{username}"
+                           type="text">
+                    <p class="error-message" th:each="error : ${#fields.errors('username')}" th:text="${error}">
+                        Validation error</p>
+                </div>
+                <label style="font-weight: bold; font-size: 14px">PASSWORD</label>
+                <input autofocus class="form-control mb-2" placeholder="Password" required th:field="*{password}"
+                       type="password">
+                <button class="btn btn-lg btn-dark btn-block mt-3" type="submit">Sign up</button>
+                <div class="text-center mt-3">
+                    Already have an account? <a href="#" th:href="@{/login-form}">Sign in.</a>
+                </div>
+                <div class="text-center mt-3">
+                    Forgot password? <a href="#" th:href="@{/restorePassword}">Restore here.</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

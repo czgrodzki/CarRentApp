@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#" style="color: #49c5b6" th:href="@{/}">C@rs</a>
+        <button aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-target="#navbarsExampleDefault" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/fleet}">Fleet <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" th:href="@{/branches}">Branches <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <div class="form-inline my-2 my-lg-0">
+                <ul class="navbar-nav mr-auto pr-4">
+                    <li class="nav-item active">
+                        <form method="post" th:action="@{/userPanel/accountSettings}">
+                            <div sec:authorize="isAuthenticated()">
+                                <button class="btn btn-link nav-link" style="color: white" type="submit">
+                                    <span sec:authentication="name">Bob</span>
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+                <div sec:authorize="isAuthenticated()">
+                    <a class="btn btn-outline-custom my-2 my-sm-0" href="#" style="color: #49c5b6" th:href="@{/logout}">
+                        Sign out
+                    </a>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a class="btn btn-outline-custom my-2 my-sm-0" href="#" style="color: #49c5b6"
+                       th:href="@{/login-form}">
+                        Sign in
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

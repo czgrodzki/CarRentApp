@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://getbootstrap.com/docs/4.3/examples/dashboard/" rel="canonical">
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="../static/css/jumbotron.css" rel="stylesheet" th:href="@{/css/jumbotron.css}">
+    <link href="../static/css/main.css" rel="stylesheet" th:href="@{/css/main.css}">
+    <link href="../static/css/dashboard.css" rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <title>Contacts</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+</div>
+
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="fragments/sidebar :: sidebar">
+            </div>
+
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="container-fluid">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="employee: ${employees}" th:object="${employee}">
+                                <td class="pt-3" th:text="*{id}">1</td>
+                                <td class="pt-3" th:text="*{firstName}">Adam</td>
+                                <td class="pt-3" th:text="*{lastName}">Adamski</td>
+                                <td class="pt-3" th:text="*{role}">MANAGER</td>
+                                <td class="pt-3" th:text="*{department.address}">Gdańsk</td>
+                                <td class="pt-3" th:text="*{entityStatus}">ACTIVE</td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE')">
+                                            <div class="row">
+                                                <form class="pl-1" method="get"
+                                                      th:action="@{|/employees/editEmployee/${employee.id}|}">
+                                                    <button class="btn btn-outline-dark btn-sm" type="submit">Edit
+                                                    </button>
+                                                </form>
+                                                <form class="pl-1" method="post"
+                                                      th:action="@{|/employees/deleteEmployee/${employee.id}|}">
+                                                    <button class="btn btn-outline-danger btn-sm"
+                                                            onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false"
+                                                            type="submit">Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<a class="btn btn-outline-success btn-sm" href="#" th:href="@{/employees/addEmployee}">Add-->
+                    <!--employee</a>-->
+                </div>
+            </main>
+        </div>
+    </div>
+</main>
+
+
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
