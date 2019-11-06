@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class DepartmentService {
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
     public List<Department> getDepartments() {
         return departmentRepository.findAllByEntityStatus(EntityStatus.ACTIVE);

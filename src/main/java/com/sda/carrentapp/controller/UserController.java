@@ -2,12 +2,11 @@ package com.sda.carrentapp.controller;
 
 import com.sda.carrentapp.entity.Role;
 import com.sda.carrentapp.entity.User;
-import com.sda.carrentapp.entity.UserDTO;
+import com.sda.carrentapp.entity.dto.UserDTO;
 import com.sda.carrentapp.exception.UserNotFoundException;
 import com.sda.carrentapp.service.BookingService;
 import com.sda.carrentapp.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
-    private BookingService bookingService;
+    private final UserService userService;
+    private final BookingService bookingService;
 
     @GetMapping
     public String getUsers(Model model) {
@@ -29,15 +28,13 @@ public class UserController {
 
     @GetMapping("/addUser")
     public String addUserView(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+        model.addAttribute("user", new User());
         return "user-form";
     }
 
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") UserDTO userDTO, Model model) throws UserNotFoundException {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.getUserByUserName(userName);
+        User user = userService.getUserByUserName(userService.getLoggedInUser());
         userService.saveUser(userDTO);
         if (user.getRole().equals(Role.USER)) {
             bookingsViewModelAttributes(model);
@@ -60,9 +57,7 @@ public class UserController {
     }
 
     private void bookingsViewModelAttributes(Model model) throws UserNotFoundException {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("booked", bookingService.getAllBookingsByUserName(userName));
-        model.addAttribute("user", userService.getUserByUserName(userName));
-//            model.addAttribute("username", userName);
+        model.addAttribute("booked", bookingService.getAllBookingsByUserName(userService.getLoggedInUser()));
+        model.addAttribute("user", userService.getUserByUserName(userService.getLoggedInUser()));
     }
 }

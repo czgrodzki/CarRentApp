@@ -1,5 +1,7 @@
-package com.sda.carrentapp.entity;
+package com.sda.carrentapp.entity.dto;
 
+import com.sda.carrentapp.entity.EntityStatus;
+import com.sda.carrentapp.entity.Status;
 import lombok.Data;
 
 @Data

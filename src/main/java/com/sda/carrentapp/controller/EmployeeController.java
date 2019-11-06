@@ -4,7 +4,7 @@ import com.sda.carrentapp.common.Message;
 import com.sda.carrentapp.entity.EntityStatus;
 import com.sda.carrentapp.entity.Role;
 import com.sda.carrentapp.entity.User;
-import com.sda.carrentapp.entity.UserDTO;
+import com.sda.carrentapp.entity.dto.UserDTO;
 import com.sda.carrentapp.exception.UserNotFoundException;
 import com.sda.carrentapp.service.DepartmentService;
 import com.sda.carrentapp.service.EmployeeService;
@@ -23,8 +23,8 @@ import java.util.stream.Stream;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private EmployeeService employeeService;
-    private DepartmentService departmentService;
+    private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
 
     @GetMapping
     public String getEmployees(Model model) {
@@ -34,10 +34,9 @@ public class EmployeeController {
 
     @GetMapping("/addEmployee")
     public String addEmployeeView(Model model) {
-        User employee = new User();
         model.addAttribute("roles", Stream.of(Role.EMPLOYEE, Role.MANAGER).collect(Collectors.toList()));
         model.addAttribute("departments", departmentService.getDepartments());
-        model.addAttribute("employee", employee);
+        model.addAttribute("employee", new User());
         return "employee-form";
     }
 
@@ -49,7 +48,7 @@ public class EmployeeController {
 
     @GetMapping("/editEmployee/{id}")
     public String updateEmployee(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("roles", Stream.of(Role.EMPLOYEE, Role.MANAGER).collect(Collectors.toList()));
+        model.addAttribute("roles", List.of(Role.EMPLOYEE, Role.MANAGER));
         model.addAttribute("departments", departmentService.getDepartments());
         model.addAttribute("employee", employeeService.getEmployeeById(id));
         return "employee-form";
@@ -59,7 +58,7 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable("id") Long id, Model model) throws UserNotFoundException {
         User employeeById = employeeService.getEmployeeById(id);
         List<User> employees = employeeService.getEmployees();
-        long count = employees.stream()
+        long numberOfMangers = employees.stream()
                 .filter(e -> e.getRole().equals(Role.MANAGER))
                 .filter(e -> e.getDepartment().getId().equals(employeeById.getDepartment().getId()))
                 .filter(e -> e.getEntityStatus().equals(EntityStatus.ACTIVE))
@@ -70,7 +69,7 @@ public class EmployeeController {
             employeeService.delete(id);
             return "redirect:/departments/employees/" + departmentId;
         }
-        if (employeeById.getRole().equals(Role.MANAGER) && count >= 2) {
+        if (employeeById.getRole().equals(Role.MANAGER) && numberOfMangers >= 2) {
             employeeService.delete(id);
             return "redirect:/departments/employees/" + departmentId;
         } else {

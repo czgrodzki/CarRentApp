@@ -1,9 +1,11 @@
-package com.sda.carrentapp.service;
+package com.sda.carrentapp.entity.mapper;
 
 import com.sda.carrentapp.entity.Car;
-import com.sda.carrentapp.entity.CreateCarRequest;
+import com.sda.carrentapp.entity.dto.CreateCarRequest;
 import com.sda.carrentapp.entity.dto.CarDto;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class CarMapper {
     public static Car map(CreateCarRequest carRequest) {
         Car car = new Car();

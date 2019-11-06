@@ -20,25 +20,24 @@ import java.util.stream.Stream;
 @Controller
 @RequestMapping("/cars")
 public class CarController {
-    private CarManager carManager;
-    private UserBooking userBooking;
-    private DepartmentService departmentService;
+    private final CarManager carManager;
+    private final UserBooking userBooking;
+    private final DepartmentService departmentService;
+
 
     @GetMapping
     public String getCars(Model model) {
-        List<Car> cars = carManager.getActiveCars();
-        model.addAttribute("cars", cars);
+        model.addAttribute("cars", carManager.getActiveCars());
         model.addAttribute("userBooking", userBooking);
         return "cars";
     }
 
     @GetMapping("/addCar")
     public String addCarView(Model model) {
-        Car car = new Car();
-        List<Status> statusList = Stream.of(Status.values()).collect(Collectors.toList());
-        model.addAttribute("statuses", statusList);
+        model.addAttribute("statuses",Stream.of(Status.values())
+                .collect(Collectors.toList()));
         model.addAttribute("departments", departmentService.getDepartments());
-        model.addAttribute("car", car);
+        model.addAttribute("car", new Car());
         return "car-form";
     }
 
@@ -50,11 +49,9 @@ public class CarController {
 
     @GetMapping("/editCar/{id}")
     public String editCarView(@PathVariable Long id, Model model) {
-        Car car = carManager.getCarById(id);
-
         model.addAttribute("statuses", Stream.of(Status.values()).collect(Collectors.toList()));
         model.addAttribute("departments", departmentService.getDepartments());
-        model.addAttribute("car", car);
+        model.addAttribute("car", carManager.getCarById(id));
         return "car-form";
     }
 
@@ -63,33 +60,4 @@ public class CarController {
         carManager.deleteCar(id);
         return "redirect:/cars";
     }
-
-//    @PostMapping("/edit/{carNum}")
-//    public RedirectView editCat(@PathVariable Long carNum, UpdateCarRequest car) {
-//        carManager.patchCar(carNum, car);
-//        RedirectView redirectView = new RedirectView();
-//        redirectView.setUrl("/cars");
-//
-//        return redirectView;
-//    }
-
-//    @PostMapping
-//    public String createCar(CreateCarRequest carRequest) {
-//        carManager.saveCar(carRequest);
-//        return "redirect:/cars";
-//    }
-
-
-
-//    @PutMapping("/{id}")
-//    public ResponseEntity updateCar(@PathVariable("id") Long id, @RequestBody UpdateCarRequest updateCarRequest) {
-//        carManager.updateCar(id, updateCarRequest);
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
-
-//    @PatchMapping("/{id}")
-//    public String patchCar(@PathVariable("id") Long id, UpdateCarRequest updateCarRequest) {
-//        carManager.patchCar(id, updateCarRequest);
-//        return "redirect:/cars";
-//    }
 }

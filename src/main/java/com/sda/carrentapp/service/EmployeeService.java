@@ -2,7 +2,7 @@ package com.sda.carrentapp.service;
 
 import com.sda.carrentapp.entity.EntityStatus;
 import com.sda.carrentapp.entity.User;
-import com.sda.carrentapp.entity.UserDTO;
+import com.sda.carrentapp.entity.dto.UserDTO;
 import com.sda.carrentapp.entity.mapper.UserMapper;
 import com.sda.carrentapp.exception.UserNotFoundException;
 import com.sda.carrentapp.repository.EmployeeRepository;
@@ -18,8 +18,8 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepository;
-    private BCryptPasswordEncoder encoder;
+    private final EmployeeRepository employeeRepository;
+    private final BCryptPasswordEncoder encoder;
 
     public List<User> getEmployees() {
         return employeeRepository.getAllEmployees();

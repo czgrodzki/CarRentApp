@@ -8,28 +8,25 @@ import com.sda.carrentapp.exception.UserNotFoundException;
 import com.sda.carrentapp.exception.WrongOldPasswordException;
 import com.sda.carrentapp.service.BookingService;
 import com.sda.carrentapp.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@AllArgsConstructor
+
 @Controller
 @RequestMapping("/userPanel")
 public class UserPanelController {
 
-    private UserService userService;
-    private BookingService bookingService;
-
-    public UserPanelController(UserService userService, BookingService bookingService) {
-        this.userService = userService;
-        this.bookingService = bookingService;
-    }
+    private final UserService userService;
+    private final BookingService bookingService;
 
     @RequestMapping("/accountSettings")
     public String showUserSettings(Model model) throws UserNotFoundException {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("user", userService.getUserByUserName(userName));
-        model.addAttribute("username", userName);
+        model.addAttribute("user", userService.getUserByUserName(userService.getLoggedInUser()));
+        model.addAttribute("username", userService.getLoggedInUser());
         return "user-form";
     }
 
@@ -47,10 +44,9 @@ public class UserPanelController {
     }
 
     private void bookingsViewModelAttributes(Model model) throws UserNotFoundException {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        model.addAttribute("booked", bookingService.getAllBookingsByUserName(userName));
-        model.addAttribute("user", userService.getUserByUserName(userName));
-        model.addAttribute("username", userName);
+        model.addAttribute("booked", bookingService.getAllBookingsByUserName(userService.getLoggedInUser()));
+        model.addAttribute("user", userService.getUserByUserName(userService.getLoggedInUser()));
+        model.addAttribute("username", userService.getLoggedInUser());
     }
 
         @PostMapping("/changePassword")
@@ -58,7 +54,7 @@ public class UserPanelController {
                                  @RequestParam("newPassword") String newPassword,
                                  @RequestParam("confirmPassword") String confirmPassword, Model model){
 
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        String userName = userService.getLoggedInUser();
         try {
             userService.changePassword(userName ,oldPassword, newPassword, confirmPassword);
         } catch (UserNotFoundException | PasswordsDoNotMatchException | WrongOldPasswordException e) {

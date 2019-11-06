@@ -1,6 +1,6 @@
 package com.sda.carrentapp.exception;
 
-public class EmailsAreNotEqualException extends Exception {
+public class EmailsAreNotEqualException extends RuntimeException {
     public EmailsAreNotEqualException() {
         super();
     }

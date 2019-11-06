@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/departments")
 public class DepartmentController {
 
-    private DepartmentService departmentService;
-    private CarManager carManager;
-    private UserBooking userBooking;
+    private final DepartmentService departmentService;
+    private final UserBooking userBooking;
 
     @GetMapping
     public String getDepartments(Model model) {
@@ -28,8 +27,7 @@ public class DepartmentController {
 
     @GetMapping("/addDepartment")
     public String addDepartmentView(Model model) {
-        Department department = new Department();
-        model.addAttribute("department", department);
+        model.addAttribute("department", new Department());
         return "department-form";
     }
 

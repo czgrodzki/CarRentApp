@@ -1,5 +1,9 @@
-package com.sda.carrentapp.entity;
+package com.sda.carrentapp.entity.dto;
 
+import com.sda.carrentapp.entity.Booking;
+import com.sda.carrentapp.entity.Department;
+import com.sda.carrentapp.entity.EntityStatus;
+import com.sda.carrentapp.entity.Role;
 import lombok.Data;
 
 import java.util.List;

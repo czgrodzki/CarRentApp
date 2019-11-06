@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/restorePassword")
 public class RestorePasswordController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public String getRestorePasswordForm(){

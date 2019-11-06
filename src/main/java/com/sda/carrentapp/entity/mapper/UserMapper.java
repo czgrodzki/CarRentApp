@@ -1,7 +1,7 @@
 package com.sda.carrentapp.entity.mapper;
 
 import com.sda.carrentapp.entity.User;
-import com.sda.carrentapp.entity.UserDTO;
+import com.sda.carrentapp.entity.dto.UserDTO;
 
 public class UserMapper {
     public static User map(UserDTO userDTO){

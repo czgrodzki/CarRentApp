@@ -3,7 +3,7 @@ package com.sda.carrentapp.service;
 import com.sda.carrentapp.entity.EntityStatus;
 import com.sda.carrentapp.entity.Role;
 import com.sda.carrentapp.entity.User;
-import com.sda.carrentapp.entity.UserDTO;
+import com.sda.carrentapp.entity.dto.UserDTO;
 import com.sda.carrentapp.entity.mapper.UserMapper;
 import com.sda.carrentapp.exception.EmailsAreNotEqualException;
 import com.sda.carrentapp.exception.PasswordsDoNotMatchException;
@@ -11,9 +11,10 @@ import com.sda.carrentapp.exception.UserNotFoundException;
 import com.sda.carrentapp.exception.WrongOldPasswordException;
 import com.sda.carrentapp.repository.DepartmentRepository;
 import com.sda.carrentapp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,23 +23,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@AllArgsConstructor
+
 @Service
 public class UserService implements UserDetailsService {
 
-    private BCryptPasswordEncoder encoder;
-    private UserRepository userRepository;
-    private DepartmentRepository departmentRepository;
+    private final BCryptPasswordEncoder encoder;
+    private final UserRepository userRepository;
+    private final DepartmentRepository departmentRepository;
 
-    @Autowired
-    public UserService(BCryptPasswordEncoder encoder, UserRepository userRepository, DepartmentRepository departmentRepository) {
-        this.encoder = encoder;
-        this.userRepository = userRepository;
-        this.departmentRepository = departmentRepository;
-    }
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public List<User> getUsers() {
         return userRepository.findAllByEntityStatus(EntityStatus.ACTIVE);
@@ -106,6 +99,11 @@ public class UserService implements UserDetailsService {
                         parseRoles(existingProfile.getRole())
                 ))
                 .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    public String getLoggedInUser(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+
     }
 
     private Collection<? extends GrantedAuthority> parseRoles(Role roles) {

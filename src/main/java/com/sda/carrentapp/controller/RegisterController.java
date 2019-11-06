@@ -1,7 +1,7 @@
 package com.sda.carrentapp.controller;
 
 import com.sda.carrentapp.entity.Role;
-import com.sda.carrentapp.entity.UserDTO;
+import com.sda.carrentapp.entity.dto.UserDTO;
 import com.sda.carrentapp.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,12 +20,11 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class RegisterController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public String getRegistrations(Model model) {
-        UserDTO user = new UserDTO();
-        model.addAttribute("user", user);
+        model.addAttribute("user", new UserDTO());
         return "register-form";
     }
 

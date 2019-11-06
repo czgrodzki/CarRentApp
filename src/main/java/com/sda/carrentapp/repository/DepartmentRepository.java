@@ -11,5 +11,4 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     Optional<Department> getDepartmentById(Long id);
 
     List<Department> findAllByEntityStatus(EntityStatus entityStatus);
-//    List<Department> findAllByEntityStatus(String entityStatus);
 }
