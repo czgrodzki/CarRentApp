@@ -65,6 +65,7 @@ public class EmployeeController {
                 .count();
         Long departmentId = employeeById.getDepartment().getId();
 
+
         if (employeeById.getRole().equals(Role.EMPLOYEE)) {
             employeeService.delete(id);
             return "redirect:/departments/employees/" + departmentId;

@@ -31,6 +31,7 @@ public class RestorePasswordController {
                                   @RequestParam("password") String password,
                                   @RequestParam("confirmPassword") String confirmPassword,
                                   Model model){
+
         try {
             userService.restorePassword(userName ,email, password, confirmPassword);
         } catch (UserNotFoundException | PasswordsDoNotMatchException | EmailsAreNotEqualException e) {

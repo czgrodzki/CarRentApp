@@ -36,6 +36,7 @@ public class UserController {
     public String saveUser(@ModelAttribute("user") UserDTO userDTO, Model model) throws UserNotFoundException {
         User user = userService.getUserByUserName(userService.getLoggedInUser());
         userService.saveUser(userDTO);
+
         if (user.getRole().equals(Role.USER)) {
             bookingsViewModelAttributes(model);
             return "redirect:/userPanel/accountSettings";

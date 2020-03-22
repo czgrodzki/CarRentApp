@@ -30,6 +30,7 @@ public class RegisterController {
 
     @PostMapping
     public String addUser(@ModelAttribute("user") @Valid UserDTO userDto, BindingResult bindResult) {
+
         if (userService.getOptionalUserByUserName(userDto.getUsername()).isPresent()) {
             bindResult.rejectValue("username", null, "Account with this user name already exist.");
         }

@@ -49,10 +49,16 @@ public class BookingService {
 
     @Transactional
     public void addBooking(UserBooking userBooking) {
+        if (userBooking == null) {
+            throw new BookingNotFoundException("Booking cannot be null");
+        }
+
         userBooking.setReservationDate(LocalDate.now());
         userBooking.setEntityStatus(EntityStatus.ACTIVE);
 
-        Optional<User> userByUsername = userRepository.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Optional<User> userByUsername = userRepository
+                .getUserByUsername(SecurityContextHolder
+                        .getContext().getAuthentication().getName());
         userBooking.setUser(userByUsername.get());
         userBooking.setCar(userBooking.getCar());
         bookingRepository.save(BookingMapper.toEntity(userBooking));
