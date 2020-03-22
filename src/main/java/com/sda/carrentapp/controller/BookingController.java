@@ -9,7 +9,7 @@ import com.sda.carrentapp.exception.BookingNotFoundException;
 import com.sda.carrentapp.exception.RentStartDateIsNullException;
 import com.sda.carrentapp.exception.UserNotFoundException;
 import com.sda.carrentapp.service.BookingService;
-import com.sda.carrentapp.service.CarManager;
+import com.sda.carrentapp.service.CarService;
 import com.sda.carrentapp.service.DepartmentService;
 import com.sda.carrentapp.service.UserService;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ import java.time.Period;
 public class BookingController {
 
     private final BookingService bookingService;
-    private final CarManager carManager;
+    private final CarService carService;
     private final DepartmentService departmentService;
     private final UserService userService;
 
@@ -50,7 +50,7 @@ public class BookingController {
     @PostMapping("/booking/selectCar")
     public String carView(@ModelAttribute("userBooking") UserBooking userBooking, Model model) {
         model.addAttribute("days", Period.between(userBooking.getStartDate(), userBooking.getEndDate()).getDays());
-        model.addAttribute("cars", carManager.getCarsByRentDepAndDateAndStatus(userBooking.getStartDate(), userBooking.getEndDate(), userBooking.getRentDepartment()));
+        model.addAttribute("cars", carService.getCarsByRentDepAndDateAndStatus(userBooking.getStartDate(), userBooking.getEndDate(), userBooking.getRentDepartment()));
         model.addAttribute("userBooking", userBooking);
         return "cars";
     }
@@ -60,7 +60,7 @@ public class BookingController {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.getUserByUserName(userName);
 
-        Car selectedCar = carManager.getCarById(id);
+        Car selectedCar = carService.getCarById(id);
         userBooking.setCar(selectedCar);
         bookingService.addBooking(userBooking);
 

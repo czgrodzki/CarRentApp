@@ -4,14 +4,13 @@ import com.sda.carrentapp.entity.Car;
 import com.sda.carrentapp.entity.Status;
 import com.sda.carrentapp.entity.UserBooking;
 import com.sda.carrentapp.entity.dto.CarDto;
-import com.sda.carrentapp.service.CarManager;
+import com.sda.carrentapp.service.CarService;
 import com.sda.carrentapp.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,14 +19,14 @@ import java.util.stream.Stream;
 @Controller
 @RequestMapping("/cars")
 public class CarController {
-    private final CarManager carManager;
+    private final CarService carService;
     private final UserBooking userBooking;
     private final DepartmentService departmentService;
 
 
     @GetMapping
     public String getCars(Model model) {
-        model.addAttribute("cars", carManager.getActiveCars());
+        model.addAttribute("cars", carService.getActiveCars());
         model.addAttribute("userBooking", userBooking);
         return "cars";
     }
@@ -43,7 +42,7 @@ public class CarController {
 
     @PostMapping("/saveCar")
     public String saveCar(@ModelAttribute("car") CarDto carDto) {
-        carManager.saveCar(carDto);
+        carService.saveCar(carDto);
         return "redirect:/cars";
     }
 
@@ -51,13 +50,13 @@ public class CarController {
     public String editCarView(@PathVariable Long id, Model model) {
         model.addAttribute("statuses", Stream.of(Status.values()).collect(Collectors.toList()));
         model.addAttribute("departments", departmentService.getDepartments());
-        model.addAttribute("car", carManager.getCarById(id));
+        model.addAttribute("car", carService.getCarById(id));
         return "car-form";
     }
 
     @PostMapping("/deleteCar/{id}")
     public String deleteCar(@PathVariable("id") Long id) {
-        carManager.deleteCar(id);
+        carService.deleteCar(id);
         return "redirect:/cars";
     }
 }

@@ -3,7 +3,6 @@ package com.sda.carrentapp.controller;
 import com.sda.carrentapp.entity.Department;
 import com.sda.carrentapp.entity.UserBooking;
 import com.sda.carrentapp.exception.DepartmentNotFoundException;
-import com.sda.carrentapp.service.CarManager;
 import com.sda.carrentapp.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
 package com.sda.carrentapp.controller;
 
-import com.sda.carrentapp.service.CarManager;
+import com.sda.carrentapp.service.CarService;
 import com.sda.carrentapp.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HomeController {
 
-    private final CarManager carManager;
+    private final CarService carService;
     private final DepartmentService departmentService;
 
     @GetMapping
@@ -24,7 +24,7 @@ public class HomeController {
 
     @GetMapping("/fleet")
     public String showFleetView(Model model) {
-        model.addAttribute("cars", carManager.getActiveCars());
+        model.addAttribute("cars", carService.getActiveCars());
         return "main/fleet-list";
     }
 

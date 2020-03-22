@@ -17,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 
 @Service
-public class CarManager {
+public class CarService {
     private CarRepository carRepository;
 
     public List<Car> getActiveCars() {
