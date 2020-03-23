@@ -17,6 +17,7 @@ import org.mockito.quality.Strictness;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
@@ -178,6 +179,24 @@ class DepartmentServiceTest {
 
     }
 
+
+    @Test
+    void getEmployeesForDepartmentShouldReturnEmptyListDueToNoEmployees() {
+
+        //given
+        Department department = new Department();
+        Set<User> users = new HashSet<>();
+        department.setUsers(users);
+        given(departmentRepository.getDepartmentById(1L)).willReturn(Optional.of(department));
+
+        //when
+        List<User> usersResult = departmentService.getEmployeesForDepartment(1L);
+
+        //then
+        assertThat(usersResult, empty());
+    }
+
+
     @Test
     void getCarsForDepartmentShouldReturnSortedListOfCarsForDepartmentWithGivenId() {
 
@@ -230,6 +249,22 @@ class DepartmentServiceTest {
         //then
         assertThrows(DepartmentNotFoundException.class, () -> departmentService.getCarsForDepartment(1L));
 
+    }
+
+    @Test
+    void getCarsForDepartmentShouldReturnEmptyListDueToNoEmployees() {
+
+        //given
+        Department department = new Department();
+        Set<Car> cars = new HashSet<>();
+        department.setCars(cars);
+        given(departmentRepository.getDepartmentById(1L)).willReturn(Optional.of(department));
+
+        //when
+        List<Car> carsForDepartment = departmentService.getCarsForDepartment(1L);
+
+        //then
+        assertThat(carsForDepartment, empty());
     }
 
 }
